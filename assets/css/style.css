@@ -14,6 +14,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 html {
   font-family: Ubuntu, Segoe UI, sans-serif;
@@ -32,7 +33,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  overflow: hidden;
+  overflow-x: hidden;
   backdrop-filter: blur(2px);
 }
 .wrapper {
@@ -47,6 +48,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow-y: auto;
 }
 .password-container {
   position: relative;
@@ -125,7 +127,9 @@ form input:focus {
   outline: none;
   border-color: var(--text-color);
 }
-div:has(input:focus) > label {
+form > div:has(input[type="email"]:focus) > label,
+form > div:has(input[type="password"]:focus) > label,
+form > div:has(input[type="text"]:focus) > label {
   background-color: var(--text-color);
 }
 form input::placeholder {
@@ -162,6 +166,8 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+/* Tablet Responsive */
 @media (max-width: 1100px) {
   .wrapper {
     width: min(600px, 100%);
@@ -171,6 +177,141 @@ a:hover {
     width: 380px;
   }
 }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  html {
+    font-size: 11pt;
+  }
+
+  .wrapper {
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    padding: 20px 15px;
+    overflow-y: auto;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+
+  form {
+    width: 100%;
+    max-width: 350px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    gap: 8px;
+  }
+
+  form label {
+    height: 45px;
+    width: 45px;
+    font-size: 1.3rem;
+  }
+
+  form input {
+    height: 45px;
+    padding: 0.8em;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  form button {
+    padding: 0.8em 3em;
+    font-size: 14px;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .password-container img {
+    width: 18px;
+    height: 18px;
+    right: 12px;
+  }
+}
+
+/* Small Mobile Responsive */
+@media (max-width: 480px) {
+  html {
+    font-size: 10pt;
+  }
+
+  .wrapper {
+    padding: 15px 10px;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+
+  form {
+    max-width: 320px;
+    gap: 6px;
+  }
+
+  form label {
+    height: 40px;
+    width: 40px;
+    font-size: 1.2rem;
+  }
+
+  form input {
+    height: 40px;
+    padding: 0.7em;
+    font-size: 16px;
+  }
+
+  form button {
+    padding: 0.7em 2.5em;
+    font-size: 13px;
+    max-width: 250px;
+  }
+  .password-container img {
+    width: 16px;
+    height: 16px;
+    right: 10px;
+  }
+}
+
+/* Extra Small Mobile Responsive */
+@media (max-width: 360px) {
+  .wrapper {
+    padding: 10px 8px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  form {
+    max-width: 280px;
+  }
+
+  form label {
+    height: 38px;
+    width: 38px;
+    font-size: 1.1rem;
+  }
+
+  form input {
+    height: 38px;
+    padding: 0.6em;
+  }
+
+  form button {
+    padding: 0.6em 2em;
+    font-size: 12px;
+    max-width: 220px;
+  }
+  .password-container img {
+    width: 16px;
+    height: 16px;
+    right: 10px;
+  }
+}
+
 form div.incorrect label {
   background-color: #ed2c42;
 }
@@ -244,6 +385,24 @@ form div.incorrect input {
   pointer-events: none;
   user-select: none;
 }
+
+/* Mobile responsive checkbox */
+@media (max-width: 480px) {
+  .checkbox-container {
+    margin: 12px 0;
+  }
+
+  .checkbox-container input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+  }
+
+  .checkbox-container label {
+    font-size: 13px;
+    margin-left: 6px;
+  }
+}
+
 /* Modal Styles */
 .modal {
   display: none;
@@ -257,6 +416,8 @@ form div.incorrect input {
   align-items: center;
   justify-content: center;
   will-change: display;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .modal-content {
@@ -271,6 +432,8 @@ form div.incorrect input {
   position: relative;
   overflow: hidden;
   will-change: transform, opacity;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 @keyframes modalSlideIn {
@@ -539,6 +702,142 @@ form div.incorrect input {
   background: linear-gradient(120deg, #c82333, #bd2130);
 }
 
+/* Mobile responsive modals */
+@media (max-width: 768px) {
+  .modal {
+    padding: 15px;
+  }
+
+  .modal-content {
+    width: 95%;
+    max-width: 400px;
+    border-radius: 15px;
+  }
+
+  .modal-header {
+    padding: 20px 25px;
+  }
+
+  .modal-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .close {
+    width: 40px;
+    height: 40px;
+    font-size: 32px;
+  }
+
+  .modal-body {
+    padding: 30px 25px;
+  }
+
+  .modal-body p {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .math-question {
+    padding: 25px;
+    margin: 20px 0;
+  }
+
+  .math-question span {
+    font-size: 2rem;
+  }
+
+  .math-input input {
+    padding: 15px 18px;
+    font-size: 18px;
+  }
+
+  .modal-buttons {
+    gap: 15px;
+    margin-top: 25px;
+  }
+
+  .modal-buttons button {
+    padding: 12px 25px;
+    font-size: 13px;
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal {
+    padding: 10px;
+  }
+
+  .modal-content {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 12px;
+  }
+
+  .modal-header {
+    padding: 18px 20px;
+  }
+
+  .modal-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .close {
+    width: 35px;
+    height: 35px;
+    font-size: 28px;
+  }
+
+  .modal-body {
+    padding: 25px 20px;
+  }
+
+  .modal-body p {
+    font-size: 15px;
+    margin-bottom: 18px;
+  }
+
+  .math-question {
+    padding: 20px;
+    margin: 15px 0;
+  }
+
+  .math-question span {
+    font-size: 1.8rem;
+  }
+
+  .math-options-container {
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .math-option {
+    padding: 8px 12px;
+    font-size: 14px;
+    min-width: 45px;
+  }
+
+  .math-input input {
+    padding: 12px 15px;
+    font-size: 16px;
+  }
+
+  .modal-buttons {
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+  }
+
+  .modal-buttons button {
+    flex: 1;
+    max-width: 140px;
+    padding: 12px 15px;
+    font-size: 14px;
+    min-width: auto;
+  }
+}
+
 /* Loader styles */
 .loader {
   display: none;
@@ -562,6 +861,16 @@ form div.incorrect input {
 
 .loader.active {
   display: block;
+}
+
+/* Mobile responsive loader */
+@media (max-width: 480px) {
+  .loader {
+    width: 35px;
+    height: 35px;
+    border-width: 3px;
+    margin: 15px auto;
+  }
 }
 
 /* Confirmation modal styles */
@@ -735,40 +1044,77 @@ form div.incorrect input {
 }
 
 .success-buttons button {
-  padding: 15px 30px;
+  padding: 12px 24px;
   border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 700;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background-color 0.2s ease;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  min-width: 120px;
-  background: linear-gradient(135deg, #28a745, #20c997);
+  letter-spacing: 0.5px;
+  min-width: 100px;
+  background: #28a745;
   color: white;
-  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-  position: relative;
-  overflow: hidden;
 }
 
 .success-buttons button:hover {
-  background: linear-gradient(135deg, #20c997, #17a2b8);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
-}
-
-.success-buttons button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3);
+  background: #218838;
 }
 
 .success-buttons button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3);
+  background: #218838;
 }
 
-/* Responsive design for modals */
+/* Responsive design for confirmation and success modals */
+@media (max-width: 768px) {
+  .confirmation-modal,
+  .success-modal {
+    padding: 15px;
+  }
+
+  .confirmation-content,
+  .success-content {
+    padding: 25px;
+    max-width: 350px;
+  }
+
+  .confirmation-content h3,
+  .success-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+  }
+
+  .confirmation-content p,
+  .success-content p {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .success-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .success-icon svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  .confirmation-buttons,
+  .success-buttons {
+    gap: 12px;
+  }
+
+  .confirmation-buttons button,
+  .success-buttons button {
+    padding: 10px 20px;
+    font-size: 13px;
+    min-width: 90px;
+  }
+}
+
 @media (max-width: 480px) {
   .confirmation-modal,
   .success-modal {
@@ -783,25 +1129,41 @@ form div.incorrect input {
 
   .confirmation-content h3,
   .success-content h3 {
-    font-size: 1.3rem;
-    margin-bottom: 15px;
+    font-size: 1.2rem;
+    margin-bottom: 12px;
   }
 
   .confirmation-content p,
   .success-content p {
     font-size: 14px;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
+  }
+
+  .success-icon {
+    width: 45px;
+    height: 45px;
+    margin-bottom: 15px;
+  }
+
+  .success-icon svg {
+    width: 22px;
+    height: 22px;
   }
 
   .confirmation-buttons,
   .success-buttons {
-    flex-direction: column;
+    flex-direction: row !important;
     gap: 10px;
+    flex-wrap: nowrap;
+    justify-content: center;
   }
 
   .confirmation-buttons button,
   .success-buttons button {
-    max-width: 100%;
-    width: 100%;
+    flex: 1 !important;
+    max-width: 140px !important;
+    width: auto !important;
+    padding: 12px 15px;
+    font-size: 14px;
   }
 }

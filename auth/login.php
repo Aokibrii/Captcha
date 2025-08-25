@@ -66,7 +66,7 @@ if (isset($_GET['show']) && $_GET['show'] === 'login') {
                 </div>
                 <div class="checkbox-container">
                     <input type="checkbox" id="show-math-modal" name="show-math-modal">
-                    <label for="show-math-modal">Click the Checkbox to Login & Verified your Account</label>
+                    <label for="show-math-modal">Click the Checkbox to Login your Account</label>
                 </div>
                 <input type="hidden" name="math-answer" id="math-answer-hidden" value="">
                 <button type="submit" name="login" id="login-btn" disabled>Login</button>

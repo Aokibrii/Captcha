@@ -13,6 +13,86 @@ document.addEventListener("DOMContentLoaded", function () {
   const loginBtn = document.getElementById("login-btn");
   const signupBtn = document.getElementById("signup-btn");
 
+  // Mobile detection
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    ) || window.innerWidth <= 768;
+
+  // Mobile-specific enhancements
+  if (isMobile) {
+    // Prevent zoom on input focus for iOS
+    const inputs = document.querySelectorAll(
+      'input[type="text"], input[type="email"], input[type="password"]'
+    );
+    inputs.forEach((input) => {
+      input.addEventListener("focus", function () {
+        // Add a small delay to prevent zoom
+        setTimeout(() => {
+          this.style.fontSize = "16px";
+        }, 100);
+      });
+
+      input.addEventListener("blur", function () {
+        // Reset font size after blur
+        this.style.fontSize = "";
+      });
+    });
+
+    // Improve touch targets for mobile
+    const touchTargets = document.querySelectorAll(
+      "button, .close, .math-option"
+    );
+    touchTargets.forEach((target) => {
+      target.style.minHeight = "44px";
+      target.style.minWidth = "44px";
+    });
+
+    // Special handling for password toggle icons - make them easier to tap without changing appearance
+    const passwordIcons = document.querySelectorAll(".password-container img");
+    passwordIcons.forEach((icon) => {
+      // Create a wrapper div to make the touch target larger without affecting the icon
+      const wrapper = document.createElement("div");
+      wrapper.style.cssText = `
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 2;
+      `;
+
+      // Move the icon into the wrapper
+      icon.parentNode.insertBefore(wrapper, icon);
+      wrapper.appendChild(icon);
+
+      // Reset icon styles
+      icon.style.position = "static";
+      icon.style.right = "auto";
+      icon.style.top = "auto";
+      icon.style.transform = "none";
+      icon.style.margin = "0";
+      icon.style.padding = "0";
+    });
+
+    // Add touch feedback for buttons
+    const buttons = document.querySelectorAll("button");
+    buttons.forEach((button) => {
+      button.addEventListener("touchstart", function () {
+        this.style.transform = "scale(0.95)";
+      });
+
+      button.addEventListener("touchend", function () {
+        this.style.transform = "";
+      });
+    });
+  }
+
   // Auto-hide error and success messages after 5 seconds
   function autoHideMessages() {
     // Check for error messages
@@ -102,14 +182,15 @@ document.addEventListener("DOMContentLoaded", function () {
     if (password === "" || password == null) {
       errors.push("Password is required");
       password_input.parentElement.classList.add("incorrect");
-    }
-    if (password.length < 8) {
-      errors.push("Password must have at least 8 characters");
+    } else if (password.length < 8) {
+      errors.push("Password must be at least 8 characters long");
       password_input.parentElement.classList.add("incorrect");
     }
-    if (password !== repeatPassword) {
-      errors.push("Password does not match repeated password");
-      password_input.parentElement.classList.add("incorrect");
+    if (repeatPassword === "" || repeatPassword == null) {
+      errors.push("Please repeat your password");
+      repeat_password_input.parentElement.classList.add("incorrect");
+    } else if (password !== repeatPassword) {
+      errors.push("Passwords do not match");
       repeat_password_input.parentElement.classList.add("incorrect");
     }
 
@@ -235,6 +316,33 @@ document.addEventListener("DOMContentLoaded", function () {
       toggleRepeatPassword.alt = isPassword
         ? "Hide Repeat Password"
         : "Show Repeat Password";
+    });
+  }
+
+  // Mobile-specific modal handling
+  if (isMobile) {
+    // Prevent body scroll when modal is open
+    const modals = document.querySelectorAll(
+      ".modal, .confirmation-modal, .success-modal"
+    );
+    modals.forEach((modal) => {
+      modal.addEventListener("show", function () {
+        document.body.style.overflow = "hidden";
+      });
+
+      modal.addEventListener("hide", function () {
+        document.body.style.overflow = "";
+      });
+    });
+
+    // Close modal on backdrop tap for mobile
+    modals.forEach((modal) => {
+      modal.addEventListener("click", function (e) {
+        if (e.target === modal) {
+          modal.style.display = "none";
+          document.body.style.overflow = "";
+        }
+      });
     });
   }
 });
