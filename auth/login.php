@@ -9,65 +9,10 @@ if (isset($_GET['show']) && $_GET['show'] === 'login') {
     header("Location: login.php");
     exit();
 }
-
-// Handle error messages
-$error_message = "";
-$success_message = "";
-
-if (isset($_GET['error'])) {
-    switch ($_GET['error']) {
-        case 'empty_fields':
-            $error_message = "Please fill in all fields.";
-            break;
-        case 'invalid_credentials':
-            $error_message = "Invalid email or password.";
-            break;
-        case 'recaptcha_failed':
-        case 'math_captcha_failed':
-            $error_message = "Incorrect answer to the math question.";
-            break;
-        default:
-            $error_message = "An error occurred. Please try again.";
-    }
-}
-
-if (isset($_GET['success'])) {
-    switch ($_GET['success']) {
-        case 'account_created':
-            $success_message = "Account created successfully! Please login.";
-            break;
-    }
-}
-
-// Generate math question (addition, subtraction, or division)
-$min = 1;
-$max = 10;
-$operators = ['+', '-', '÷'];
-$operator = $operators[array_rand($operators)];
-
-if ($operator === '+') {
-    $a = rand($min, $max);
-    $b = rand($min, $max);
-    $answer = $a + $b;
-    $question = "$a + $b = ?";
-} elseif ($operator === '-') {
-    $a = rand($min, $max);
-    $b = rand($min, $max);
-    // Ensure non-negative result
-    if ($a < $b) {
-        [$a, $b] = [$b, $a];
-    }
-    $answer = $a - $b;
-    $question = "$a - $b = ?";
-} else { // Division (ensure whole number)
-    $b = rand($min, $max);
-    $answer = rand($min, $max);
-    $a = $b * $answer;
-    $question = "$a ÷ $b = ?";
-}
-
-$_SESSION['math_captcha_answer'] = $answer;
 ?>
+<?php include '../includes/error_login.php'; ?>
+<?php include '../includes/math_questions.php'; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

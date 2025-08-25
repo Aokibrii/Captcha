@@ -15,55 +15,75 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Auto-hide error and success messages after 5 seconds
   function autoHideMessages() {
-    if (error_message && error_message.textContent.trim() !== "") {
-      // Add close button to error message
-      if (!error_message.querySelector(".message-close")) {
-        const closeBtn = document.createElement("span");
-        closeBtn.className = "message-close";
-        closeBtn.innerHTML = "&times;";
-        closeBtn.style.cssText =
-          "float: right; cursor: pointer; font-size: 18px; font-weight: bold; margin-left: 10px;";
-        closeBtn.onclick = () => hideMessage(error_message);
-        error_message.appendChild(closeBtn);
-      }
+    // Check for error messages
+    if (error_message) {
+      const errorText = error_message.textContent.trim();
+      if (errorText !== "" && errorText !== "undefined") {
+        console.log("Found error message:", errorText);
 
-      setTimeout(() => {
-        hideMessage(error_message);
-      }, 5000);
+        // Add close button to error message
+        if (!error_message.querySelector(".message-close")) {
+          const closeBtn = document.createElement("span");
+          closeBtn.className = "message-close";
+          closeBtn.innerHTML = "&times;";
+          closeBtn.style.cssText =
+            "float: right; cursor: pointer; font-size: 18px; font-weight: bold; margin-left: 10px;";
+          closeBtn.onclick = () => hideMessage(error_message);
+          error_message.appendChild(closeBtn);
+        }
+
+        // Set timeout to hide error message
+        setTimeout(() => {
+          console.log("Hiding error message after timeout");
+          hideMessage(error_message);
+        }, 5000);
+      }
     }
 
-    if (success_message && success_message.textContent.trim() !== "") {
-      // Add close button to success message
-      if (!success_message.querySelector(".message-close")) {
-        const closeBtn = document.createElement("span");
-        closeBtn.className = "message-close";
-        closeBtn.innerHTML = "&times;";
-        closeBtn.style.cssText =
-          "float: right; cursor: pointer; font-size: 18px; font-weight: bold; margin-left: 10px; color: #28a745;";
-        closeBtn.onclick = () => hideMessage(success_message);
-        success_message.appendChild(closeBtn);
-      }
+    // Check for success messages
+    if (success_message) {
+      const successText = success_message.textContent.trim();
+      if (successText !== "" && successText !== "undefined") {
+        console.log("Found success message:", successText);
 
-      setTimeout(() => {
-        hideMessage(success_message);
-      }, 5000);
+        // Add close button to success message
+        if (!success_message.querySelector(".message-close")) {
+          const closeBtn = document.createElement("span");
+          closeBtn.className = "message-close";
+          closeBtn.innerHTML = "&times;";
+          closeBtn.style.cssText =
+            "float: right; cursor: pointer; font-size: 18px; font-weight: bold; margin-left: 10px; color: #28a745;";
+          closeBtn.onclick = () => hideMessage(success_message);
+          success_message.appendChild(closeBtn);
+        }
+
+        // Set timeout to hide success message
+        setTimeout(() => {
+          console.log("Hiding success message after timeout");
+          hideMessage(success_message);
+        }, 5000);
+      }
     }
   }
 
   // Function to hide message with fade effect
   function hideMessage(messageElement) {
     if (messageElement) {
+      console.log("Hiding message element:", messageElement);
       messageElement.style.opacity = "0";
       setTimeout(() => {
         messageElement.style.display = "none";
         messageElement.textContent = "";
         messageElement.classList.remove("error", "success");
+        console.log("Message hidden successfully");
       }, 300);
     }
   }
 
-  // Initialize auto-hide for existing messages
-  autoHideMessages();
+  // Initialize auto-hide for existing messages with a small delay
+  setTimeout(() => {
+    autoHideMessages();
+  }, 100);
 
   function getSignupFormErrors(name, email, password, repeatPassword) {
     let errors = [];
