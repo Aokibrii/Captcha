@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mobile Responsiveness Test - SecuredLogin</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <style>
+      .test-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+      }
+
+      .test-section {
+        margin-bottom: 40px;
+        padding: 20px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        background: #f9f9f9;
+      }
+
+      .test-section h2 {
+        color: #0c057b;
+        margin-bottom: 15px;
+      }
+
+      .screen-size {
+        background: #0c057b;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .responsive-info {
+        background: #e3f2fd;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+      }
+
+      .responsive-info h3 {
+        color: #1976d2;
+        margin-bottom: 10px;
+      }
+
+      .responsive-info ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      .responsive-info li {
+        margin-bottom: 5px;
+      }
+
+      .breakpoint {
+        background: #fff3e0;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        border-left: 4px solid #ff9800;
+      }
+
+      .breakpoint strong {
+        color: #e65100;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="test-container">
+      <h1>Mobile Responsiveness Test</h1>
+      <p>
+        This page demonstrates the mobile responsiveness features of the
+        SecuredLogin system.
+      </p>
+
+      <div class="screen-size" id="screen-size">
+        Current Screen Size: <span id="current-size"></span>
+      </div>
+
+      <div class="test-section">
+        <h2>Responsive Breakpoints</h2>
+        <div class="breakpoint">
+          <strong>Desktop:</strong> Above 1100px - Full layout with sidebar
+        </div>
+        <div class="breakpoint">
+          <strong>Tablet:</strong> 768px - 1100px - Centered layout without
+          sidebar
+        </div>
+        <div class="breakpoint">
+          <strong>Mobile:</strong> 480px - 768px - Mobile-optimized layout
+        </div>
+        <div class="breakpoint">
+          <strong>Small Mobile:</strong> 360px - 480px - Compact mobile layout
+        </div>
+        <div class="breakpoint">
+          <strong>Extra Small:</strong> Below 360px - Minimal layout
+        </div>
+      </div>
+
+      <div class="test-section">
+        <h2>Mobile Features</h2>
+        <div class="responsive-info">
+          <h3>Touch Optimization</h3>
+          <ul>
+            <li>Minimum 44px touch targets for all interactive elements</li>
+            <li>Touch feedback on buttons (scale effect)</li>
+            <li>Improved scrolling for math options</li>
+            <li>Backdrop tap to close modals</li>
+          </ul>
+        </div>
+
+        <div class="responsive-info">
+          <h3>iOS Compatibility</h3>
+          <ul>
+            <li>Prevents zoom on input focus</li>
+            <li>16px font size for inputs to prevent zoom</li>
+            <li>Smooth scrolling with -webkit-overflow-scrolling</li>
+          </ul>
+        </div>
+
+        <div class="responsive-info">
+          <h3>Modal Improvements</h3>
+          <ul>
+            <li>Full-width modals on mobile devices</li>
+            <li>Prevents body scroll when modal is open</li>
+            <li>Responsive button layouts (stacked on small screens)</li>
+            <li>Optimized padding and spacing for touch</li>
+          </ul>
+        </div>
+
+        <div class="responsive-info">
+          <h3>Form Enhancements</h3>
+          <ul>
+            <li>Responsive input sizing</li>
+            <li>Mobile-optimized password visibility toggles</li>
+            <li>Better error message display</li>
+            <li>Improved checkbox styling</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="test-section">
+        <h2>Test the Login Form</h2>
+        <p>
+          Below is a sample of the responsive login form. Try resizing your
+          browser window to see the responsive behavior:
+        </p>
+
+        <!-- Sample login form for testing -->
+        <div
+          class="wrapper"
+          style="
+            position: relative;
+            height: auto;
+            min-height: 400px;
+            margin: 20px auto;
+          "
+        >
+          <h1>Login</h1>
+          <form style="margin-bottom: 20px">
+            <div>
+              <label for="test-email">
+                <span>@</span>
+              </label>
+              <input type="email" id="test-email" placeholder="Email" />
+            </div>
+            <div>
+              <label for="test-password">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24"
+                  viewBox="0 -960 960 960"
+                  width="24"
+                >
+                  <path
+                    d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm240-200q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80Z"
+                  />
+                </svg>
+              </label>
+              <div class="password-container">
+                <input
+                  type="password"
+                  id="test-password"
+                  placeholder="Password"
+                />
+                <img
+                  src="assets/icons/eye-close1.png"
+                  alt="Toggle Password"
+                  style="cursor: pointer"
+                />
+              </div>
+            </div>
+            <div class="checkbox-container">
+              <input type="checkbox" id="test-checkbox" />
+              <label for="test-checkbox"
+                >Click the Checkbox to Login your Account</label
+              >
+            </div>
+            <button type="button" style="width: 100%; max-width: 280px">
+              Login
+            </button>
+          </form>
+          <p>New here? <a href="#">Create an Account</a></p>
+        </div>
+      </div>
+
+      <div class="test-section">
+        <h2>Modal Responsiveness</h2>
+        <p>Click the button below to test the responsive modal:</p>
+        <button
+          onclick="showTestModal()"
+          style="
+            background: #0c057b;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+          "
+        >
+          Show Test Modal
+        </button>
+      </div>
+    </div>
+
+    <!-- Test Modal -->
+    <div id="test-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Test Modal</h2>
+          <span class="close" onclick="closeTestModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+          <p>
+            This is a test modal to demonstrate mobile responsiveness. Try
+            resizing your browser window to see how the modal adapts to
+            different screen sizes.
+          </p>
+          <div class="math-question">
+            <span>5 + 3 = ?</span>
+          </div>
+          <div class="math-options-container">
+            <div class="math-option">6</div>
+            <div class="math-option">7</div>
+            <div class="math-option">8</div>
+            <div class="math-option">9</div>
+          </div>
+          <div class="modal-buttons">
+            <button>Verify</button>
+            <button>Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Update screen size display
+      function updateScreenSize() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const sizeElement = document.getElementById("current-size");
+
+        let sizeCategory = "";
+        if (width > 1100) sizeCategory = "Desktop";
+        else if (width > 768) sizeCategory = "Tablet";
+        else if (width > 480) sizeCategory = "Mobile";
+        else if (width > 360) sizeCategory = "Small Mobile";
+        else sizeCategory = "Extra Small Mobile";
+
+        sizeElement.textContent = `${width}px × ${height}px (${sizeCategory})`;
+      }
+
+      // Show test modal
+      function showTestModal() {
+        document.getElementById("test-modal").style.display = "flex";
+      }
+
+      // Close test modal
+      function closeTestModal() {
+        document.getElementById("test-modal").style.display = "none";
+      }
+
+      // Initialize
+      updateScreenSize();
+      window.addEventListener("resize", updateScreenSize);
+
+      // Close modal on backdrop click
+      document
+        .getElementById("test-modal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) {
+            closeTestModal();
+          }
+        });
+    </script>
+  </body>
+</html>
