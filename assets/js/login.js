@@ -28,6 +28,7 @@ checkbox.addEventListener("change", function () {
     // Use requestAnimationFrame for smoother modal display
     requestAnimationFrame(() => {
       modal.style.display = "flex";
+      document.body.classList.add("no-scroll");
       // Delay options generation slightly for better perceived performance
       setTimeout(() => {
         generateMathOptions();
@@ -35,6 +36,7 @@ checkbox.addEventListener("change", function () {
     });
   } else {
     modal.style.display = "none";
+    document.body.classList.remove("no-scroll");
     loginBtn.disabled = true;
     if (mathAnswerHidden) mathAnswerHidden.value = "";
     selectedOption = null;
@@ -46,20 +48,27 @@ closeBtn.addEventListener("click", function () {
   modal.style.display = "none";
   checkbox.checked = false;
   loginBtn.disabled = true;
+  document.body.classList.remove("no-scroll");
   if (mathAnswerHidden) mathAnswerHidden.value = "";
   selectedOption = null;
 });
 
-// Close modal when clicking outside
-window.addEventListener("click", function (event) {
-  if (event.target === modal) {
-    modal.style.display = "none";
-    checkbox.checked = false;
-    loginBtn.disabled = true;
-    if (mathAnswerHidden) mathAnswerHidden.value = "";
-    selectedOption = null;
+// Prevent closing when clicking outside and stop background scroll
+window.addEventListener("mousedown", function (event) {
+  if (modal.style.display === "flex" && event.target === modal) {
+    event.stopPropagation();
   }
 });
+
+window.addEventListener(
+  "wheel",
+  function (event) {
+    if (modal.style.display === "flex") {
+      event.preventDefault();
+    }
+  },
+  { passive: false }
+);
 
 // Verify math answer
 verifyBtn.addEventListener("click", function () {
@@ -131,12 +140,10 @@ window.addEventListener("click", function (event) {
   if (event.target === confirmationModal) {
     confirmationModal.style.display = "none";
   }
-  if (event.target === successModal) {
-    successModal.style.display = "none";
-  }
+  // Removed the success modal close on outside click - users must click the Continue button
 });
 
-// Function to generate math options (further optimized)
+// Function to generate math options (enhanced for new operations)
 function generateMathOptions() {
   const correctAnswer = parseInt(mathQuestion.dataset.answer);
   const options = [];
@@ -144,17 +151,29 @@ function generateMathOptions() {
   // Add the correct answer
   options.push(correctAnswer);
 
-  // Generate 15 random wrong answers (reduced for better performance)
+  // Generate wrong answers based on the magnitude of the correct answer
   const usedNumbers = new Set([correctAnswer]);
-  const maxAttempts = 50; // Prevent infinite loops
+  const maxAttempts = 50;
+
+  // Determine range for wrong answers based on correct answer size
+  let range;
+  if (correctAnswer <= 10) {
+    range = 10; // Small numbers: ±10 range
+  } else if (correctAnswer <= 50) {
+    range = 20; // Medium numbers: ±20 range
+  } else if (correctAnswer <= 100) {
+    range = 30; // Large numbers: ±30 range
+  } else {
+    range = Math.floor(correctAnswer * 0.3); // Very large numbers: 30% range
+  }
 
   for (let i = 0; i < 15; i++) {
     let wrongAnswer;
     let attempts = 0;
 
     do {
-      // Generate random number between -8 and +15 from correct answer (smaller range)
-      const offset = Math.floor(Math.random() * 24) - 12;
+      // Generate wrong answer within appropriate range
+      const offset = Math.floor(Math.random() * (range * 2 + 1)) - range;
       wrongAnswer = correctAnswer + offset;
       attempts++;
     } while (
@@ -168,9 +187,18 @@ function generateMathOptions() {
     }
   }
 
-  // Fill remaining slots with simple numbers if needed
+  // Fill remaining slots with appropriate numbers
   while (options.length < 16) {
-    const simpleNumber = Math.floor(Math.random() * 20) + 1;
+    let simpleNumber;
+    if (correctAnswer <= 10) {
+      simpleNumber = Math.floor(Math.random() * 20) + 1;
+    } else if (correctAnswer <= 50) {
+      simpleNumber = Math.floor(Math.random() * 50) + 1;
+    } else {
+      simpleNumber =
+        Math.floor(Math.random() * Math.max(correctAnswer, 100)) + 1;
+    }
+
     if (!usedNumbers.has(simpleNumber)) {
       usedNumbers.add(simpleNumber);
       options.push(simpleNumber);
@@ -256,20 +284,14 @@ function generateNewMathQuestion() {
     });
 }
 
-// Enable smooth horizontal mouse wheel scrolling for math options
+// Enable horizontal mouse wheel scrolling for math options (simplified)
 mathOptionsContainer.addEventListener(
   "wheel",
   function (e) {
     e.preventDefault();
-
-    // Smooth scrolling with configurable speed
-    const scrollSpeed = 1.5;
+    const scrollSpeed = 0.6;
     const delta = e.deltaY * scrollSpeed;
-
-    // Use requestAnimationFrame for smooth scrolling
-    requestAnimationFrame(() => {
-      this.scrollLeft += delta;
-    });
+    this.scrollLeft += delta;
   },
   { passive: false }
 );
