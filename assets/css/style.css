@@ -1,13 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
 
 :root {
-  --accent-color: #0c057b;
-  --border-color: #171717;
+  --accent-color: #070069;
+  --border-color: #000000;
   --base-color: #ffffff;
   --text-color: #0a0a0a;
   --input-color: #e1e2e4;
   --hover-color: #030657ca;
-  --lively-color: #0c057b;
+  --lively-color: #0d057b;
   --verify-color: #28a745;
   --verify-hover-color: #218838;
 }
@@ -25,30 +25,49 @@ html {
 body {
   min-height: 100vh;
   background: linear-gradient(
-    202deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(4, 4, 181, 1) 49%,
-    rgba(4, 59, 71, 1) 100%
+    140deg,
+    rgba(2, 0, 36, 1) 10%,
+    rgb(2, 2, 145) 50%,
+    rgb(1, 30, 37) 100%
   );
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   overflow-x: hidden;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(10px);
+}
+
+html,
+body {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+.container-flex {
+  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 .wrapper {
   box-sizing: border-box;
   background-color: var(--base-color);
   height: 100vh;
-  width: max(40%, 350px);
+  width: max(40%, 320px);
   padding: 10px;
-  border-radius: 0 15px 15px 0;
-  border: solid 2px var(--border-color);
+  border-radius: 15px 15px 15px 15px;
+  border: solid 3px var(--border-color);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow-y: auto;
+  overflow: hidden;
 }
 .password-container {
   position: relative;
@@ -180,8 +199,40 @@ a:hover {
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
+  html,
+  body {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+
   html {
     font-size: 11pt;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    touch-action: none;
+  }
+
+  .container-flex {
+    min-height: 100vh;
+    height: 100vh;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .wrapper {
+    overflow: hidden;
   }
 
   .wrapper {
@@ -233,8 +284,30 @@ a:hover {
 
 /* Small Mobile Responsive */
 @media (max-width: 480px) {
+  html,
+  body {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+
   html {
     font-size: 10pt;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  .container-flex {
+    min-height: 100vh;
+    height: 100vh;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .wrapper {
+    overflow: hidden;
   }
 
   .wrapper {
@@ -277,6 +350,31 @@ a:hover {
 
 /* Extra Small Mobile Responsive */
 @media (max-width: 360px) {
+  html,
+  body {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  .container-flex {
+    min-height: 100vh;
+    height: 100vh;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .wrapper {
+    overflow: hidden;
+  }
+
   .wrapper {
     padding: 10px 8px;
   }
@@ -415,9 +513,9 @@ form div.incorrect input {
   background-color: rgba(0, 0, 0, 0.6);
   align-items: center;
   justify-content: center;
-  will-change: display;
   padding: 20px;
   box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-content {
@@ -428,12 +526,12 @@ form div.incorrect input {
   width: 90%;
   max-width: 450px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-  animation: modalSlideIn 0.3s ease-out;
+  animation: modalSlideIn 0.15s ease-out;
   position: relative;
   overflow: hidden;
-  will-change: transform, opacity;
   max-height: 90vh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 @keyframes modalSlideIn {
@@ -472,7 +570,7 @@ form div.incorrect input {
   font-size: 40px;
   font-weight: bold;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: color 0.1s ease;
   position: relative;
   z-index: 1;
   width: 50px;
@@ -533,7 +631,6 @@ form div.incorrect input {
   padding: 10px;
   scrollbar-width: thin;
   scrollbar-color: var(--accent-color) #f0f0f0;
-  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -563,7 +660,7 @@ form div.incorrect input {
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: border-color 0.1s ease;
   min-width: 50px;
   flex-shrink: 0;
   text-align: center;
@@ -573,30 +670,24 @@ form div.incorrect input {
 
 .math-option:hover {
   border-color: var(--accent-color);
-  background-color: #f8f9fa;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(12, 5, 123, 0.15);
 }
 
 .math-option.selected {
   border-color: var(--accent-color);
-  background: linear-gradient(135deg, var(--accent-color), var(--hover-color));
+  background: var(--accent-color);
   color: white;
-  box-shadow: 0 4px 12px rgba(12, 5, 123, 0.3);
 }
 
 .math-option.correct {
   border-color: #28a745;
-  background: linear-gradient(135deg, #28a745, #218838);
+  background: #28a745;
   color: white;
-  animation: pulse 0.6s ease-in-out;
 }
 
 .math-option.incorrect {
   border-color: #ed2c42;
-  background: linear-gradient(135deg, #ed2c42, #c82333);
+  background: #ed2c42;
   color: white;
-  animation: shake 0.4s ease-in-out;
 }
 
 @keyframes pulse {
@@ -672,7 +763,7 @@ form div.incorrect input {
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: background-color 0.15s ease;
   text-transform: uppercase;
   letter-spacing: 1px;
   min-width: 115px;
