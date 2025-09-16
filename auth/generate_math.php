@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-// Generate math question (addition, subtraction, or division)
+// Generate math question with expanded operations
 $min = 1;
-$max = 10;
-$operators = ['+', '-', '÷'];
+$max = 12;
+$operators = ['+', '-', '×', '÷', '%', '^', '√'];
 $operator = $operators[array_rand($operators)];
 
 if ($operator === '+') {
@@ -21,11 +21,34 @@ if ($operator === '+') {
     }
     $answer = $a - $b;
     $question = "$a - $b = ?";
-} else { // Division (ensure whole number)
-    $b = rand($min, $max);
-    $answer = rand($min, $max);
+} elseif ($operator === '×') {
+    $a = rand(1, 10); // Smaller numbers for multiplication
+    $b = rand(1, 10);
+    $answer = $a * $b;
+    $question = "$a × $b = ?";
+} elseif ($operator === '÷') {
+    // Division (ensure whole number)
+    $b = rand(1, 10);
+    $answer = rand(1, 10);
     $a = $b * $answer;
     $question = "$a ÷ $b = ?";
+} elseif ($operator === '%') {
+    // Modulo operation
+    $a = rand(10, 50);
+    $b = rand(2, 10);
+    $answer = $a % $b;
+    $question = "$a % $b = ?";
+} elseif ($operator === '^') {
+    // Power operation (smaller numbers)
+    $a = rand(2, 5);
+    $b = rand(2, 3);
+    $answer = pow($a, $b);
+    $question = "$a^$b = ?";
+} else { // Square root
+    $a = rand(1, 10);
+    $perfect_square = $a * $a;
+    $answer = $a;
+    $question = "√$perfect_square = ?";
 }
 
 $_SESSION['math_captcha_answer'] = $answer;

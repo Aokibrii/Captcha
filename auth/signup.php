@@ -1,4 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
+// Security/cache headers for auth pages
+if (!headers_sent()) {
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header('Pragma: no-cache');
+    header('X-Content-Type-Options: nosniff');
+    header('X-Frame-Options: DENY');
+    header('Referrer-Policy: no-referrer');
+}
+
 session_start();
 
 if (isset($_GET['show']) && $_GET['show'] === 'signup') {
@@ -13,9 +25,9 @@ if (isset($_GET['show']) && $_GET['show'] === 'signup') {
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Sign Up - SecuredLogin</title>
-    <link rel="stylesheet" href="../assets/css/style.css?v=<?php echo time(); ?>" />
+    <link rel="stylesheet" href="../assets/css/style.css?v=<?php echo rawurlencode((string)time()); ?>" />
     <link rel="icon" href="../assets/images/lock.png">
     <script type="text/javascript" src="../assets/js/validation.js" defer></script>
 </head>
@@ -24,7 +36,7 @@ if (isset($_GET['show']) && $_GET['show'] === 'signup') {
     <div class="container-flex">
         <div class="wrapper">
             <h1>Sign Up</h1>
-            <p id="error-message" class="<?php echo $error_message ? 'error' : ''; ?>"><?php echo htmlspecialchars($error_message); ?></p>
+            <p id="error-message" class="<?php echo $error_message ? 'error' : ''; ?>"><?php echo htmlspecialchars($error_message, ENT_QUOTES, 'UTF-8'); ?></p>
             <form id="form" action="../includes/auth_handler.php" method="POST">
                 <div>
                     <label for="name-input">
@@ -41,7 +53,7 @@ if (isset($_GET['show']) && $_GET['show'] === 'signup') {
                         type="text"
                         name="name"
                         id="name-input"
-                        placeholder="Full Name" />
+                        placeholder="Full Name" autocomplete="name" />
                 </div>
                 <div>
                     <label for="email-input">
@@ -51,7 +63,7 @@ if (isset($_GET['show']) && $_GET['show'] === 'signup') {
                         type="email"
                         name="email"
                         id="email-input"
-                        placeholder="Email" />
+                        placeholder="Email" autocomplete="email" />
                 </div>
                 <div>
                     <label for="password-input">
@@ -69,7 +81,7 @@ if (isset($_GET['show']) && $_GET['show'] === 'signup') {
                             type="password"
                             name="password"
                             id="password-input"
-                            placeholder="Password" />
+                            placeholder="Password" autocomplete="new-password" />
                         <img src="/SecuredLogin/assets/icons/eye-close1.png" id="toggle-password-visibility" alt="Toggle Password Visibility">
                     </div>
                 </div>
@@ -89,7 +101,7 @@ if (isset($_GET['show']) && $_GET['show'] === 'signup') {
                             type="password"
                             name="repeat-password"
                             id="repeat-password-input"
-                            placeholder="Repeat Password" />
+                            placeholder="Repeat Password" autocomplete="new-password" />
                         <img src="/SecuredLogin/assets/icons/eye-close1.png" id="toggle-repeat-password-visibility" alt="Toggle Repeat Password Visibility">
                     </div>
                 </div>
@@ -100,7 +112,7 @@ if (isset($_GET['show']) && $_GET['show'] === 'signup') {
                 <input type="hidden" name="math-answer" id="math-answer-hidden" value="">
                 <button type="submit" name="signup" id="signup-btn" disabled>Register</button>
             </form>
-            <p>Already have an Account? <a href="login.php">login</a> </p>
+            <p>Already have an Account? <a href="login.php">Login</a> </p>
         </div>
     </div>
 
@@ -114,7 +126,7 @@ if (isset($_GET['show']) && $_GET['show'] === 'signup') {
             <div class="modal-body">
                 <p>Please solve this math problem to register your account</p>
                 <div class="math-question">
-                    <span id="math-question" data-question="<?php echo $question; ?>" data-answer="<?php echo $answer; ?>"><?php echo $question; ?></span>
+                    <span id="math-question" data-question="<?php echo htmlspecialchars($question, ENT_QUOTES, 'UTF-8'); ?>" data-answer="<?php echo htmlspecialchars((string)$answer, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($question, ENT_QUOTES, 'UTF-8'); ?></span>
                 </div>
                 <div class="math-options-container" id="math-options">
                     <!-- Options will be generated by JavaScript -->
@@ -145,9 +157,7 @@ if (isset($_GET['show']) && $_GET['show'] === 'signup') {
     <div id="success-modal" class="success-modal">
         <div class="success-content">
             <div class="success-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                </svg>
+                <img src="../assets/images/4240-verified-green-animated.gif" alt="Verification Successful" style="width: 80px; height: 80px;">
             </div>
             <h3>Verification Successful!</h3>
             <p>Math verification completed successfully. You can now proceed with your registration.</p>
