@@ -97,6 +97,8 @@ verifyBtn.addEventListener("click", function () {
       selectedOption.classList.add("incorrect");
       selectedOption.classList.remove("correct");
       if (mathAnswerHidden) mathAnswerHidden.value = "";
+      // Automatically load a new question on incorrect answer
+      generateNewMathQuestion();
     }
 
     // Hide loader and re-enable buttons
